@@ -7,9 +7,9 @@ module.exports = {
     
     async index(req,res){
 
-        const post = await Post.find().sort('-createdAt')
+        const posts = await Post.find().sort('-createdAt')
 
-        return res.json(post) 
+        return res.json(posts) 
     
     },
 
@@ -26,13 +26,13 @@ module.exports = {
 
 
 
-        // return res.json(req.file)
+        // // return res.json(req.file)
 
         await sharp(req.file.path)
                 .resize(500)
                 .jpeg({ quality:70 })
                 .toFile( 
-                    path.resolve(req.file.destination,'resized',image)
+                    path.resolve(req.file.destination,'resized',fileName)
                 )
 
         fs.unlinkSync(req.file.path);
@@ -42,9 +42,9 @@ module.exports = {
 
             author,
             place,
-            description,
+            description  ,
             hashtags,
-            image: fileName
+            image:fileName
 
         })
         req.io.emit('post', post)
